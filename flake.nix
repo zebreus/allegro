@@ -1,5 +1,5 @@
 {
-  description = "Language oriented programming setup";
+  description = "Allegro Common Lisp";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=refs/heads/master";
