@@ -104,6 +104,8 @@
             };
           }
         );
+
+        packages.default = packages.allegro;
       }
     );
 }
