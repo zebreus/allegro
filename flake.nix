@@ -2,7 +2,7 @@
   description = "Allegro Common Lisp";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=refs/heads/master";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=refs/heads/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -61,7 +61,7 @@
           , fetchzip
           , autoPatchelfHook
           , gdbm
-          , openssl
+          , openssl_3
           , libz
           , makeWrapper
           , binaryName ? "alisp"
@@ -79,8 +79,8 @@
                   url = "https://franz.com/ftp/pub/acl10.1express/linuxamd64.64/acl${version}express-linux-x64.tbz2";
                   hash = "sha256-7LN/jxjJoJctIVPrW3n27smwXzm0w8jUrbS+Z8P1Y5Y=";
                 };
-              buildInputs = [ autoPatchelfHook gdbm openssl libz makeWrapper ];
-              runtimeDependencies = [ gdbm openssl libz ];
+              buildInputs = [ autoPatchelfHook gdbm openssl_3 libz makeWrapper ];
+              runtimeDependencies = [ gdbm openssl_3 libz ];
               prePatch = ''
                 patchelf --replace-needed libgdbm.so.2 libgdbm.so code/ndbm_wrappers.so
               '';
@@ -109,11 +109,11 @@
                 mv $out/allegro/__nix-temporary-binary $out/allegro/${binaryName}
                 
                 makeWrapper $out/allegro/${binaryName} $out/bin/${binaryName} \
-                  --suffix PATH : ${pkgs.lib.makeBinPath ([
-                    pkgs.openssl
+                  --prefix PATH : ${pkgs.lib.makeBinPath ([
+                    pkgs.openssl_3
                   ] ++ extraProgramsAtRuntime)} \
                   --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [
-                    pkgs.openssl
+                    pkgs.openssl_3
                     pkgs.zlib
                   ]}
               '';
@@ -122,7 +122,6 @@
                 homepage = "https://franz.com/products/allegrocl/";
                 platforms = platforms.linux;
                 mainProgram = binaryName;
-
               };
             }
           );
