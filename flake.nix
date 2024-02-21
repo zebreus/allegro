@@ -73,11 +73,11 @@
 
             stdenv.mkDerivation rec {
               pname = binaryName;
-              version = "10.1";
+              version = "11.0";
               src = fetchzip
                 {
-                  url = "https://franz.com/ftp/pub/acl10.1express/linuxamd64.64/acl${version}express-linux-x64.tbz2";
-                  hash = "sha256-7LN/jxjJoJctIVPrW3n27smwXzm0w8jUrbS+Z8P1Y5Y=";
+                  url = "https://franz.com/ftp/pub/acl${version}express/linuxamd64.64/acl${version}express-linux-x64.tbz2";
+                  hash = "sha256-PRgbVcaTRp6pMJbo3T8vODNVETIhGheCE7RyRRHmJig=";
                 };
               buildInputs = [ autoPatchelfHook gdbm openssl_3 libz makeWrapper ];
               runtimeDependencies = [ gdbm openssl_3 libz ];
